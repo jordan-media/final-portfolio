@@ -1,0 +1,127 @@
+[
+  {
+    "id": "amazon-product-video-advertisement",
+    "name": "Amazon Product Video Advertisement",
+    "isFeatured": true,
+    "shortDescription": "Created a product video advertisement for an Amazon seller, showcasing key points and how the product looks in a natural environment.",
+    "longDescription": "I worked with the product owner to create a product advertisement, showcasing its key points, and how it looks in a natural environment. My tasks included creating and refining the script, doing voice-over, setting up film shots and angles, and storyboarding. I also acted as the star in the commercial as per the owner's request.",
+    "images": [
+      {
+        "src": "./images/projectDetail-amazon.jpg",
+        "alt": "Main still from Amazon product video",
+        "caption": "A key scene from the Amazon product video advertisement."
+      }
+    ],
+    "technologiesUsed": [
+      "Adobe Audition",
+      "Adobe Premiere Pro"
+    ],
+    "toolsUsed": [
+      "iPhone (yes, sersiously, it was filmed on an iPhone)",
+      "Studio Microphone (for audio recording)",
+      "Lighting Equipment"
+    ],
+    "liveUrl": "https://www.amazon.com/Waterproof-Outdoor-Curtain-W52-L84/dp/B08SMQ1LQT?ref_=ast_sto_dp&th=1",
+    "githubUrl": null,
+    "caseStudyUrl": null,
+    "rolePlayed": "Scriptwriter, Voice-Over Artist, Cinematographer, Storyboarder, and On-Screen Talent.",
+    "challenges": [
+      {
+        "description": "Language barriers arose when working with a non-native English speaker as the product owner.",
+        "solution": "This was overcome with a lot of patience and understanding, bridging the gap between cultural differences. Completing the project and accomplishing all the small goals during the process was very rewarding."
+      },
+      {
+        "description": "Selecting a film location was a challenge because the product owner wanted a very specific look and feel.",
+        "solution": "After a significant amount of time, I found the perfect spot to film."
+      },
+      {
+        "description": "We were faced with the natural atmosphere, needing it not too sunny or not too cloudy. This is sometimes a big gamble, as any producer would know.",
+        "solution": "The solution was being on call for the right moment. As soon as the wind died down and the sun went behind the clouds, we began production immediately, allowing for the right moments."
+      },
+      {
+        "description": "Changes occurred on the fly; the product owner insisted on bringing in her own ideas, and the original plan strayed multiple times.",
+        "solution": "The only solution was to go with the flow and make the most of what it was. Sometimes, it's not about arguing that you're not following the plan, but about getting the job done and producing something beautiful. Having your own agenda sometimes doesn't work; sometimes you sacrifice the plan for the sake of getting the job done."
+      }
+    ],
+    "outcome": "The final outcome was a completed showcase product. While the final rendition is a little overexposed, the final call was up to the product owner, and she was quite happy with how everything came together."
+  },
+  {
+    "id": "adobe-automation",
+    "name": "Adobe Automation Project",
+    "isFeatured": true,
+    "shortDescription": "Developed an Adobe Automation (scripting) workflow to transform raster images into scalable vector art. This process simplifies color palettes and generates geometric patterns, primarily using triangles, to create unique artistic interpretations while maintaining image recognizability.",
+    "longDescription": "When I started learning motion graphics, I wasn't sure what to expect. But discovering the available tools and how I could control them was very interesting. My first big project was a unique parallax design, different from the usual website scrolling effects, and it gave me a strong base for later projects. This experience led me to my next piece: an intro bumper for my sports guide branding. For this project, I experimented a lot with After Effects filters, basic design principles, and using null objects. I found After Effects so engaging; hours would pass without me noticing because it was so much fun and a good creative challenge. I'm excited to keep making my workflow better and unlock all the creative things I can do in After Effects.",
+    "images": [
+      {
+        "src": "/images/adobe-automation-main.jpg",
+        "alt": "An example of an image transformed into vector art using the automated workflow.",
+        "caption": "A visual representation of the automated vector conversion process in action."
+      }
+    ],
+    "technologiesUsed": [
+      "JavaScript",
+      "Adobe ExtendScript"
+    ],
+    "toolsUsed": [
+      "Adobe Illustrator"
+    ],
+    "liveUrl": null,
+    "githubUrl": null,
+    "caseStudyUrl": null,
+    "rolePlayed": "Automation Developer & Creative Technologist",
+    "challenges": [
+      {
+        "description": "Implementing deeper JavaScript functionalities, complex mathematical formulas, and managing multiple layers of scripting to complete intricate single tasks.",
+        "solution": "Overcame these complexities through persistence and patience, continuously refining the code and logic."
+      },
+      {
+        "description": "The iterative debugging process required repeatedly closing the program and manually uploading scripts for testing, making development cycles lengthy.",
+        "solution": "Addressed this with sustained persistence, meticulous attention to detail, and by experimenting with alternative methods to optimize results and workflow."
+      }
+    ],
+    "outcome": "I successfully developed basic motion graphics skills, and this led to creating strong visual pieces. This project sparked a deep passion for motion design, encouraging ongoing learning and trying out new techniques to improve my workflow and discover more creative possibilities in Adobe After Effects."
+  },
+  {
+    "id": "wireframing-prototyping",
+    "name": "J-Sports Cards App",
+    "isFeatured": true,
+    "shortDescription": "Designed and prototyped 'J-Sports Cards,' an app concept that transforms personal sports photos into customizable digital trading cards. It features sport-specific stats and an intuitive UI, aiming to fill a market gap for multi-sport data tracking.",
+    "longDescription": "J-Sports Cards began as a personal idea addressing a real-world problem and a gap in the current market. This app concept is designed to turn pictures on your phone into customizable trading card-style formats, which can then be downloaded or printed. Its unique strength lies in its adaptability: it can apply to any sport or activity. The app easily lays out and makes available sport-specific stats—goals and assists for hockey, home runs or strikeouts for baseball, and so on for various sports. Having one app that manages all sports is a novel concept not currently available. In today's competitive world, tracking data is something even children enjoy, sometimes without realizing it. An easy and simplified user interface allows anyone, from amateur to professional, to customize what they see on their card. If a beginner didn't get any points, that wouldn't be posted. However, if an advanced player broke a new personal record, that would definitely be on the back of the card. An intuitive system that applies to all different player types is key to this app’s success. Real user research was conducted, including journey mapping and personas. Based on this information, wireframes were created and developed into a functional prototype. The exciting next step will be developing an MVP version of the app. As my education continues at the time of writing this, I am fortunate to have opportunities to bring my imagination to life.",
+    "images": [
+      {
+        "src": "/images/j-sports-cards-main.jpg",
+        "alt": "Main screen of J-Sports Cards app prototype showing a customizable sports card.",
+        "caption": "A glimpse of the J-Sports Cards app prototype with a personalized trading card."
+      }
+    ],
+    "technologiesUsed": [
+      "Mobile App Development",
+      "UI/UX Design Principles",
+      "Data Visualization"
+    ],
+    "toolsUsed": [
+      "Figma",
+      "Android Studio",
+      "VS Code",
+      "Adobe Illustrator",
+      "Adobe InDesign",
+      "Canva"
+    ],
+    "liveUrl": null,
+    "githubUrl": null,
+    "caseStudyUrl": null,
+    "rolePlayed": "UI/UX Designer, Researcher, Product Conceptualizer, Developer", 
+    "challenges": [
+      {
+        "description": "Being a full-time student in a high-demand course limit's extra time for passion projects.",
+        "solution": "Overcame this by taking the steps and using methods learned in class projects to advance this personal project into something real."
+      },
+      {
+        "description": "Understanding what parents of kids playing sports actually want and actively removing personal bias from the research equation.",
+        "solution": "Overcame this through in-depth, real-world user research, which provided good insights that theory alone couldn't."
+      }
+    ],
+    "outcome": "Successfully developed wireframes and a functional prototype for the J-Sports Cards app, validated by real-world user research. This project confirmed theory through practical application, laying the groundwork for a future MVP development."
+  }
+
+]

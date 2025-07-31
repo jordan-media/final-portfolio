@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Jeff",
+    "title": "Teacher",
+    "statement": "Jordan displays a great capacity to communicate and has performed admirably in the courses I have taught. I see Jordan's performance in class and his establishing himself as a leader among his peers.",
+    "photo_url": "/images/references/jeff.jpg",
+    "rating": 5
+  },
+  {
+    "id": 2,
+    "name": "Weiyun",
+    "title": "Friend",
+    "statement": "Jordan is honest, intelligent and responsible, but more than that, he is full of life. He earns the trust of people that surround him and I consider him a truly outstanding character.",
+    "photo_url": "/images/references/weiyun.jpg",
+    "rating": 5
+  },
+  {
+    "id": 3,
+    "name": "Kai",
+    "title": "Son",
+    "statement": "I have the best dad in my opinion and he helps me a lot with stuff and he works really hard on his homework.",
+    "photo_url": "/images/references/kai.jpg",
+    "rating": 5
+  },
+  {
+    "id": 4,
+    "name": "Nate",
+    "title": "Friend",
+    "statement": "I met Jordan when he moved in across the street. He brought the whole neighborhood together—people who hadn't even said hello in years. Our families are lifelong friends now.",
+    "photo_url": "/images/references/nate.jpg",
+    "rating": 5
+  },
+  {
+    "id": 5,
+    "name": "Mariyla",
+    "title": "Daughter",
+    "statement": "My dad is tough on me, but I respect him and I know he loves me. My friends think I have the best dad in the world too. I seriously think he is like a super hero.",
+    "photo_url": "/images/references/mariyla.jpg",
+    "rating": 5
+  },
+  {
+    "id": 6,
+    "name": "Scott",
+    "title": "Former Boss",
+    "statement": "I choose Jordan to be a part of my crew when I had the chance, because when it came down to the fine details and those situations that make or break something big, those details are everything.",
+    "photo_url": "/images/references/scott.jpg",
+    "rating": 5
+  }
+]

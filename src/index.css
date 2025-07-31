@@ -1,0 +1,49 @@
+/* src/index.css (or main.css) */
+
+/* Import Tailwind's base styles, components, and utilities */
+@import "tailwindcss";
+/*
+  Global styles that are NOT covered by Tailwind's Preflight or
+  are specific to your root HTML/Body elements.
+*/
+
+html, body, #root { /* #root is common in React to ensure the app fills the screen */
+  height: 100%; /* Ensures the app takes full height */
+  width: 100%;  /* Ensures the app takes full width */
+  /* Prevent horizontal scroll from overflow, useful if you have elements that extend */
+  overflow-x: hidden;
+  /* Optional: Smooth scroll for anchor links */
+  scroll-behavior: smooth;
+}
+
+/*
+  Body background and default text color.
+  You can also apply these as classes directly to the <body> tag in your index.html
+  or to your main layout component.
+*/
+body {
+  /* Using Tailwind's default gray-50 or a custom color defined in tailwind.config.js */
+  background-color: theme('colors.gray.50'); /* This pulls from your Tailwind config */
+  /* Using Tailwind's default gray-700 or a custom color */
+  color: theme('colors.gray.700'); /* This pulls from your Tailwind config */
+  line-height: theme('lineHeight.normal'); /* Or `leading-normal` class */
+  /* Your desired font smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+  Font family for body:
+  You should add your preferred font stack to tailwind.config.js under `fontFamily.sans`.
+  Example: `sans: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']`
+  Once configured, you apply `font-sans` class globally (e.g., on <body> or your root layout).
+  No need for it here if you apply it with a class.
+*/
+
+/*
+  These CSS variables are no longer needed as you'll use Tailwind classes directly for colors.
+  --primary-color: #ffffff;
+  --secondary-color: #18171b;
+  --text-color: #000000;
+  --link-hover-color: #e0e0e0;
+*/
