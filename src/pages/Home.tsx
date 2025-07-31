@@ -70,7 +70,7 @@ function Home() {
       >
         <div className="hero-content-animation-target text-center p-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gray-700 mb-4 sm:mb-6 leading-tight font-extrabold">
-            Welcome to My Portfolio!
+            Welcome to My Portfolio!!
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">
             Showcasing my creative and technical journey.
