@@ -73,7 +73,7 @@ const ReferenceCarousel: React.FC<ReferenceCarouselProps> = ({ references = [] }
     stopAutoplay();
     setCurrentIndex(index);
     animate(x, 0, spring);
-    setTimeout(startAutoplay, 5000);
+    setTimeout(startAutoplay, 7000);
   };
 
   const goToPrevious = (): void => {
@@ -105,7 +105,7 @@ const ReferenceCarousel: React.FC<ReferenceCarouselProps> = ({ references = [] }
       }
     } else {
       animate(x, 0, spring);
-      setTimeout(startAutoplay, 5000);
+      setTimeout(startAutoplay, 7000);
     }
   };
 

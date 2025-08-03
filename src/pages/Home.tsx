@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
 import { Project } from '../types/Projects'; // Import the full Project interface
+import TypewriterEffect from '../sections/TypewritterEffect';
 
 // Assuming these sections remain in the 'sections' directory for now
 // Update paths if you move them to 'components' later
@@ -76,10 +77,15 @@ function Home() {
             Showcasing my creative and technical journey.
           </p>
         </div>
+        
       </section>
+      
 
       {/* Value Statement Section - Assuming this is a standalone component */}
       <ValueStatement />
+      <TypewriterEffect />
+
+      
 
       {/* Featured Projects Section */}
       <section className="py-8 px-4 max-w-4xl mx-auto font-space-grotesk text-gray-900 md:py-16 md:px-8">
@@ -96,6 +102,7 @@ function Home() {
         ) : featuredProjects.length > 0 ? (
           // Render the grid of featured projects if they exist
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
             {featuredProjects.map((project) => (
               <Link
                 key={project.id}
@@ -124,8 +131,18 @@ function Home() {
                     Learn More &rarr;
                   </span>
                 </div>
+                
               </Link>
+              
             ))}
+            <div>
+              
+
+              <img src="/images/fullshot-5.jpg" />
+
+
+
+            </div>
           </div>
         ) : (
           // Message if no featured projects are found

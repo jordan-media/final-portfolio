@@ -8,7 +8,7 @@
 */
 
 html, body, #root { /* #root is common in React to ensure the app fills the screen */
-  height: 100%; /* Ensures the app takes full height */
+  min-height: 100%; /* Ensures the app takes full height */
   width: 100%;  /* Ensures the app takes full width */
   /* Prevent horizontal scroll from overflow, useful if you have elements that extend */
   overflow-x: hidden;

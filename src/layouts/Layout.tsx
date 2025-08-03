@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Header from "../components/Header"; // Assuming Header will also be converted to TS/Tailwind
 import NavigationGrid from "../sections/NavigationGrid"; // Assuming NavigationGrid will also be converted
 import Footer from "../components/Footer"; // Assuming Footer will also be converted
+import TypewriterEffect from "../sections/TypewritterEffect";
 
 // Explicitly type the functional component to return JSX.Element
 export default function Layout() {
@@ -34,6 +35,7 @@ export default function Layout() {
 
       {/* NavigationGrid and Footer will render here, their styling will be handled in their own files */}
       <NavigationGrid />
+      
       <Footer />
     </div>
   );
