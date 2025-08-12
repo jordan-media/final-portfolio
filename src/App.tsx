@@ -9,6 +9,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Blog from "./pages/Blog";
 import Error from "./pages/Error";
 import ScrollToTop from "./components/ScrollToTop";
+import BlogIndex from "./pages/BlogIndex";
 
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
           <Route path="/about" element={<About />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:projectId" element={<ProjectDetail />} />
-          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog" element={<BlogIndex />} />
           <Route path="*" element={<Error />} />
         </Route>
       </Routes>

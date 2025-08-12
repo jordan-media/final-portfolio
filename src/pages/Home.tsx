@@ -1,74 +1,71 @@
-// src/pages/Home.tsx
+// ================================
+// src/pages/Home.tsx (stabilized fetch + featured grid)
+// ================================
 import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { Link } from 'react-router-dom';
-import { Project } from '../types/Projects'; // Import the full Project interface
+import { Project } from '../types/Projects';
 import TypewriterEffect from '../sections/TypewritterEffect';
-
-// Assuming these sections remain in the 'sections' directory for now
-// Update paths if you move them to 'components' later
-import ValueStatement from '../sections/ValueStatement'; // Assuming this component exists
-import Extras from '../components/Extras'; // Assuming this component exists
+import ValueStatement from '../sections/ValueStatement';
+import Extras from '../components/Extras';
 
 function Home() {
-  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]); // Renamed for clarity: we're specifically getting featured projects
+  const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Robust fetch: relative URL + no-cache + abort on unmount
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    fetch("/projects.json")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    const ctrl = new AbortController();
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const res = await fetch('projects.json', { cache: 'no-store', signal: ctrl.signal });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data: Project[] = await res.json();
+        const filtered = data.filter((p) => p.isFeatured);
+        setFeaturedProjects(filtered);
+      } catch (e: any) {
+        if (e?.name !== 'AbortError') {
+          console.error('Error fetching projects:', e);
+          setError('Failed to load featured projects.');
         }
-        return response.json();
-      })
-      .then((data: Project[]) => {
-        // Filter for projects where isFeatured is true, as per our JSON structure
-        const filteredProjects = data.filter(project => project.isFeatured);
-        setFeaturedProjects(filteredProjects);
-      })
-      .catch(err => {
-        console.error("Error fetching projects:", err);
-        setError("Failed to load featured projects."); // Specific error message
-      })
-      .finally(() => {
+      } finally {
         setLoading(false);
-      });
-  }, []); // Empty dependency array means this effect runs once on component mount
+      }
+    })();
+    return () => ctrl.abort();
+  }, []);
 
-  // 1️⃣ Animate hero content on mount
+  // Animate hero
   useEffect(() => {
-    gsap.from(".hero-content-animation-target", {
+    gsap.from('.hero-content-animation-target', {
       duration: 1,
       y: -50,
       opacity: 0,
-      ease: "power2.out"
+      ease: 'power2.out',
     });
   }, []);
 
-  // 2️⃣ Animate project list items once loaded
+  // Animate cards when data arrives
   useEffect(() => {
-    if (!loading && featuredProjects.length > 0) { // Only animate if loading is complete AND projects exist
-      gsap.from(".project-list-item-animation-target", {
+    if (!loading && featuredProjects.length > 0) {
+      gsap.from('.project-list-item-animation-target', {
         duration: 0.5,
         y: 20,
         opacity: 0,
-        stagger: 0.1, // Animate items one after another
-        ease: "power1.out",
-        delay: 0.2 // Small delay to let other elements render
+        stagger: 0.1,
+        ease: 'power1.out',
+        delay: 0.2,
       });
     }
-  }, [loading, featuredProjects]); // Re-run effect if loading status or projects change
+  }, [loading, featuredProjects]);
 
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen">
       {/* Hero Section */}
-      <section
-        className="relative w-full h-screen bg-gray-200 flex items-center justify-center overflow-hidden"
-      >
+      <section className="relative w-full h-[90vh] sm:h-screen bg-gray-200 flex items-center justify-center overflow-hidden">
         <div className="hero-content-animation-target text-center p-4">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gray-700 mb-4 sm:mb-6 leading-tight font-extrabold">
             Welcome to My Portfolio!!
@@ -77,80 +74,55 @@ function Home() {
             Showcasing my creative and technical journey.
           </p>
         </div>
-        
       </section>
-      
 
-      {/* Value Statement Section - Assuming this is a standalone component */}
       <ValueStatement />
       <TypewriterEffect />
 
-      
-
-      {/* Featured Projects Section */}
-      <section className="py-8 px-4 max-w-4xl mx-auto font-space-grotesk text-gray-900 md:py-16 md:px-8">
+      {/* Featured Projects */}
+      <section className="py-8 px-4 max-w-5xl mx-auto font-space-grotesk text-gray-900 md:py-16 md:px-8">
         <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-center md:text-left">
           Featured Projects
         </h2>
 
         {loading ? (
-          // Display a loading message specific to the projects section
           <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-gray-600">Loading projects...</div>
         ) : error ? (
-          // Display an error message if fetching failed
           <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-red-600">Error: {error}</div>
         ) : featuredProjects.length > 0 ? (
-          // Render the grid of featured projects if they exist
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            
             {featuredProjects.map((project) => (
               <Link
                 key={project.id}
                 to={`/projects/${project.id}`}
-                className="z-15 block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 project-list-item-animation-target"
+                className="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 project-list-item-animation-target"
               >
                 <div className="p-6">
-                  {/* Display the project image if available */}
-                  {project.images && project.images.length > 0 && (
+                  {project.images?.[0]?.src ? (
                     <img
                       src={project.images[0].src}
-                      alt={project.images[0].alt}
+                      alt={project.images[0].alt || project.name}
                       className="w-full h-48 object-cover rounded-md mb-4"
+                      loading="lazy"
                     />
+                  ) : (
+                    <div className="w-full h-48 rounded-md mb-4 bg-gray-100 grid place-items-center">
+                      <span className="text-sm text-gray-400">No image</span>
+                    </div>
                   )}
-                  {/* Display project name */}
-                  <h3 className="text-2xl font-bold mb-2 text-blue-700">
-                    {project.name}
-                  </h3>
-                  {/* Display short description */}
-                  <p className="text-gray-700 mb-4">
-                    {project.shortDescription}
-                  </p>
-                  {/* "Learn More" link text */}
-                  <span className="inline-block text-blue-600 hover:text-blue-800 font-semibold">
-                    Learn More &rarr;
-                  </span>
+
+                  <h3 className="text-2xl font-bold mb-2 text-blue-700">{project.name}</h3>
+                  <p className="text-gray-700 mb-4">{project.shortDescription}</p>
+                  <span className="inline-block text-blue-600 hover:text-blue-800 font-semibold">Learn More →</span>
                 </div>
-                
               </Link>
-              
             ))}
-            <div>
-              
-
-              <img src="/images/fullshot-5.jpg" />
-
-
-
-            </div>
           </div>
         ) : (
-          // Message if no featured projects are found
-          <p className="text-center text-xl text-gray-600">No featured projects to display yet. Check your `projects.json`.</p>
+          <p className="text-center text-xl text-gray-600">No featured projects to display yet. Check your projects.json.</p>
         )}
       </section>
 
-      {/* Extras Section - Assuming this is a standalone component */}
       <Extras />
     </div>
   );
