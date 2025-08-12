@@ -17,6 +17,8 @@ jobs:
         run: |
           npm install
           npm run build
+      - name: Copy .htaccess to dist
+        run: cp .htaccess dist/.htaccess
       - name: 📁 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
