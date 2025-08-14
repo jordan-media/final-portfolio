@@ -1,5 +1,4 @@
 // src/types/Project.ts
-
 export interface ProjectImage {
   src: string;
   alt: string;
@@ -17,6 +16,14 @@ export interface Project {
   isFeatured: boolean;
   shortDescription: string;
   longDescription: string;
+  
+  // NEW: Path-specific descriptions
+  descriptions?: {
+    developer?: string;
+    ux?: string;
+    creative?: string;
+  };
+  
   images: ProjectImage[];
   technologiesUsed: string[];
   toolsUsed: string[];
@@ -27,3 +34,6 @@ export interface Project {
   challenges: ProjectChallenge[];
   outcome: string;
 }
+
+// Portfolio path type for the modal system
+export type PortfolioPath = 'developer' | 'ux' | 'creative' | null;

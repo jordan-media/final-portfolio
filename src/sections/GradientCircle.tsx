@@ -17,30 +17,39 @@ const GradientCircle: React.FC<GradientCircleProps> = ({ size = 256, className =
         ...style,
       }}
     >
+      {/* Main gradient: White to deep green (matching your text gradient direction) */}
       <div
         className="absolute inset-0 rounded-full"
         style={{
-          background: 'linear-gradient(to right, #FFFFFF 0%, #470C86 100%)'
+          background: 'linear-gradient(to right, #FFFFFF 0%, #065f46 100%)'
         }}
       />
+      
+      {/* Highlight shadow */}
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{
           boxShadow: 'inset -1px 2px 5.5px rgba(255, 255, 255, 0.08)'
         }}
       />
+      
+      {/* Deep shadow with cyan tones */}
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{
-          boxShadow: 'inset -9px 1px 13.7px rgba(23, 13, 69, 0.54)'
+          boxShadow: 'inset -9px 1px 13.7px rgba(6, 78, 59, 0.54)'
         }}
       />
+      
+      {/* Overlay blend with cyan-green gradient */}
       <div
         className="absolute inset-0 rounded-full mix-blend-overlay backdrop-blur-[4.8px] pointer-events-none"
         style={{
-          background: 'linear-gradient(to right, rgba(199, 223, 164, 0.43), rgba(255, 255, 255, 0.25))'
+          background: 'linear-gradient(to right, rgba(34, 197, 94, 0.43), rgba(6, 182, 212, 0.35))'
         }}
       />
+      
+      {/* Noise texture overlay */}
       <div
         className="absolute inset-0 rounded-full pointer-events-none"
         style={{

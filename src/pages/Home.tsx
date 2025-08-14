@@ -1,20 +1,70 @@
-// ================================
-// src/pages/Home.tsx (stabilized fetch + featured grid)
-// ================================
+// src/pages/Home.tsx
 import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
-import { Link } from 'react-router-dom';
 import { Project } from '../types/Projects';
 import TypewriterEffect from '../sections/TypewritterEffect';
-import ValueStatement from '../sections/ValueStatement';
 import Extras from '../components/Extras';
+import ProjectHoverList from '../sections/ProjectHoverList';
+import { getPathConfig, PathConfig } from '../utils/pathConfig';
+import { usePath } from '../contexts/PathContext';
+
+// Helper component for creative text highlighting
+interface CreativeTextProps {
+  children: string;
+  className?: string;
+}
+
+const CreativeText: React.FC<CreativeTextProps> = ({ children, className = '' }) => {
+  const highlightWords = [
+    'creative', 'vision', 'storytelling', 'narrative', 'brand', 'concept', 
+    'visual', 'design', 'artistic', 'innovative', 'compelling', 'engaging'
+  ];
+  
+  const highlightText = (text: string) => {
+    try {
+      const regex = new RegExp(`\\b(${highlightWords.join('|')})\\b`, 'gi');
+      const parts = text.split(regex);
+      
+      return parts.map((part, index) => {
+        const isHighlightWord = highlightWords.some(word => 
+          word.toLowerCase() === part.toLowerCase()
+        );
+        
+        if (isHighlightWord) {
+          return (
+            <span 
+              key={index}
+              className="bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent font-extrabold"
+            >
+              {part}
+            </span>
+          );
+        }
+        return part;
+      });
+    } catch (error) {
+      console.error('Error highlighting text:', error);
+      return text;
+    }
+  };
+
+  return (
+    <span className={className}>
+      {highlightText(children)}
+    </span>
+  );
+};
 
 function Home() {
   const [featuredProjects, setFeaturedProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Robust fetch: relative URL + no-cache + abort on unmount
+  // Get context values - modal is now handled globally in Layout
+  const { selectedPath, initialized } = usePath();
+  const config: PathConfig | null = getPathConfig(selectedPath);
+
+  // Fetch projects
   useEffect(() => {
     const ctrl = new AbortController();
     (async () => {
@@ -38,88 +88,160 @@ function Home() {
     return () => ctrl.abort();
   }, []);
 
-  // Animate hero
+  // Animate hero when component loads and path is selected
   useEffect(() => {
-    gsap.from('.hero-content-animation-target', {
-      duration: 1,
-      y: -50,
-      opacity: 0,
-      ease: 'power2.out',
-    });
-  }, []);
-
-  // Animate cards when data arrives
-  useEffect(() => {
-    if (!loading && featuredProjects.length > 0) {
-      gsap.from('.project-list-item-animation-target', {
-        duration: 0.5,
-        y: 20,
+    if (selectedPath && initialized) {
+      gsap.from('.hero-content-animation-target', {
+        duration: 1,
+        y: -50,
         opacity: 0,
-        stagger: 0.1,
-        ease: 'power1.out',
-        delay: 0.2,
+        ease: 'power2.out',
       });
     }
-  }, [loading, featuredProjects]);
+  }, [selectedPath, initialized]);
+
+  // Don't render hero content until initialized
+  if (!initialized) {
+    return (
+      <div className="bg-gray-50 text-gray-800 min-h-screen flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
+  // Get path-specific hero content
+  const getHeroContent = (): { title: string; subtitle: string } => {
+    if (!selectedPath) {
+      return { title: 'Digital Generalist', subtitle: 'Showcasing my creative and technical journey.' };
+    }
+    
+    switch (selectedPath) {
+      case 'developer':
+        return {
+          title: 'Frontend Developer',
+          subtitle: 'Building responsive, user-focused web applications with modern technologies.'
+        };
+      case 'ux':
+        return {
+          title: 'UX Designer',
+          subtitle: 'Creating intuitive user experiences through research, design, and iteration.'
+        };
+      case 'creative':
+        return {
+          title: 'Creative Storyteller',
+          subtitle: 'Crafting compelling narratives through visual design and multimedia content.'
+        };
+      default:
+        return {
+          title: 'Digital Generalist',
+          subtitle: 'Showcasing my creative and technical journey.'
+        };
+    }
+  };
+
+  const heroContent = getHeroContent();
 
   return (
     <div className="bg-gray-50 text-gray-800 min-h-screen">
-      {/* Hero Section */}
-      <section className="relative w-full h-[90vh] sm:h-screen bg-gray-200 flex items-center justify-center overflow-hidden">
-        <div className="hero-content-animation-target text-center p-4">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gray-700 mb-4 sm:mb-6 leading-tight font-extrabold">
-            Welcome to My Portfolio!!
+      {/* Hero Section with Path-Specific Typography */}
+      <section className="relative w-full h-[90vh] sm:h-screen bg-gray-200 flex items-center justify-center overflow-hidden z-10">
+        <div className="hero-content-animation-target text-center p-4 relative z-20">
+          <h1 className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4 sm:mb-6 leading-tight ${
+            config ? config.typography.heading : 'font-extrabold'
+          } ${config ? config.colors.primary : 'text-gray-900'}`}>
+            {selectedPath === 'creative' ? (
+              <span className="bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">
+                {heroContent.title}
+              </span>
+            ) : (
+              heroContent.title
+            )}
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-700 font-medium">
-            Showcasing my creative and technical journey.
+          
+          <p className={`text-lg sm:text-xl md:text-2xl font-medium ${
+            config ? config.typography.body : ''
+          } ${config ? config.colors.primary : 'text-gray-900'}`}>
+            {selectedPath === 'creative' ? (
+              <CreativeText className="">{heroContent.subtitle}</CreativeText>
+            ) : (
+              heroContent.subtitle
+            )}
           </p>
+
+          {/* Taglines with gradient + a focus phrase in black */}
+          {selectedPath && (
+            <p className="mt-2 text-base sm:text-lg md:text-xl italic">
+              {selectedPath === 'ux' && (
+                <>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    UxD instincts since RollerCoaster Tycoon '99 — designing rides{' '}
+                  </span>
+                  <span className="text-gray-900 font-semibold">for the guest</span>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    , not the builder.
+                  </span>
+                </>
+              )}
+              {selectedPath === 'developer' && (
+                <>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    Dev roots sprouted in science summer camps, back when{' '}
+                  </span>
+                  <span className="text-gray-900 font-semibold">AOL CDs</span>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    {' '}came with breakfast.
+                  </span>
+                </>
+              )}
+              {selectedPath === 'creative' && (
+                <>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    Raised by a family of storytellers, and brought up with good content from{' '}
+                  </span>
+                  <span className="text-gray-900 font-semibold">genuine moments</span>
+                  <span className="bg-gradient-to-r from-cyan-500 to-green-600 bg-clip-text text-transparent font-semibold">
+                    , not algorithms.
+                  </span>
+                </>
+              )}
+            </p>
+          )}
         </div>
       </section>
 
-      <ValueStatement />
       <TypewriterEffect />
 
-      {/* Featured Projects */}
-      <section className="py-8 px-4 max-w-5xl mx-auto font-space-grotesk text-gray-900 md:py-16 md:px-8">
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 text-center md:text-left">
-          Featured Projects
-        </h2>
+      {/* Featured Projects Section with Path-Specific Headers */}
+      <section className="py-8 px-4 max-w-[1280px] mx-auto font-space-grotesk text-gray-900 md:py-16 md:px-8">
+        {config && (
+          <div className="text-center mb-12">
+            <p className={`text-sm uppercase tracking-wider text-gray-500 mb-2 ${config.typography.body}`}>
+              {config.terminology.caseStudyType}
+            </p>
+            <h2 className={`text-3xl md:text-4xl ${config.typography.heading} ${config.colors.primary}`}>
+              Featured {config.terminology.projects}
+            </h2>
+          </div>
+        )}
 
         {loading ? (
-          <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-gray-600">Loading projects...</div>
-        ) : error ? (
-          <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-red-600">Error: {error}</div>
-        ) : featuredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {featuredProjects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className="block bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1 project-list-item-animation-target"
-              >
-                <div className="p-6">
-                  {project.images?.[0]?.src ? (
-                    <img
-                      src={project.images[0].src}
-                      alt={project.images[0].alt || project.name}
-                      className="w-full h-48 object-cover rounded-md mb-4"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-full h-48 rounded-md mb-4 bg-gray-100 grid place-items-center">
-                      <span className="text-sm text-gray-400">No image</span>
-                    </div>
-                  )}
-
-                  <h3 className="text-2xl font-bold mb-2 text-blue-700">{project.name}</h3>
-                  <p className="text-gray-700 mb-4">{project.shortDescription}</p>
-                  <span className="inline-block text-blue-600 hover:text-blue-800 font-semibold">Learn More →</span>
-                </div>
-              </Link>
-            ))}
+          <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-gray-600">
+            Loading {config?.terminology.projects.toLowerCase() || 'projects'}...
           </div>
+        ) : error ? (
+          <div className="text-center text-xl sm:text-2xl md:text-3xl pt-[5vh] text-red-600">
+            Error: {error}
+          </div>
+        ) : featuredProjects.length > 0 ? (
+          <ProjectHoverList 
+            projects={featuredProjects} 
+            selectedPath={selectedPath}
+            config={config}
+          />
         ) : (
-          <p className="text-center text-xl text-gray-600">No featured projects to display yet. Check your projects.json.</p>
+          <p className="text-center text-xl text-gray-600">
+            No featured {config?.terminology.projects.toLowerCase() || 'projects'} to display yet. Check your projects.json.
+          </p>
         )}
       </section>
 

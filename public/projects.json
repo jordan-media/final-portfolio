@@ -1,15 +1,31 @@
+
 [
   {
     "id": "amazon-product-video-advertisement",
-    "name": "Amazon Product Video Advertisement",
+    "name": "Amazon Advertisement",
     "isFeatured": true,
     "shortDescription": "Created a product video advertisement for an Amazon seller, showcasing key points and how the product looks in a natural environment.",
     "longDescription": "I worked with the product owner to create a product advertisement, showcasing its key points, and how it looks in a natural environment. My tasks included creating and refining the script, doing voice-over, setting up film shots and angles, and storyboarding. I also acted as the star in the commercial as per the owner's request.",
     "images": [
       {
-        "src": "./images/projectDetail-amazon.jpg",
+        "src": "/images/projects/amazon/1.jpeg",
         "alt": "Main still from Amazon product video",
         "caption": "A key scene from the Amazon product video advertisement."
+      },
+      {
+        "src": "/images/projects/amazon/2.jpg",
+        "alt": "Second still from Amazon product video",
+        "caption": "Another key moment from the Amazon product video advertisement."
+      },
+      {
+        "src": "/images/projects/amazon/dev/2.jpg",
+        "alt": "Development-focused view of the project",
+        "caption": "Technical aspects and development process of the Amazon advertisement."
+      },
+      {
+        "src": "/images/projects/amazon/ux/1.jpg",
+        "alt": "UX-focused view of the project",
+        "caption": "User experience considerations in the advertisement design."
       }
     ],
     "technologiesUsed": [
@@ -17,7 +33,7 @@
       "Adobe Premiere Pro"
     ],
     "toolsUsed": [
-      "iPhone (yes, sersiously, it was filmed on an iPhone)",
+      "iPhone (yes, seriously, it was filmed on an iPhone)",
       "Studio Microphone (for audio recording)",
       "Lighting Equipment"
     ],
@@ -86,12 +102,53 @@
     "name": "J-Sports Cards App",
     "isFeatured": true,
     "shortDescription": "Designed and prototyped 'J-Sports Cards,' an app concept that transforms personal sports photos into customizable digital trading cards. It features sport-specific stats and an intuitive UI, aiming to fill a market gap for multi-sport data tracking.",
-    "longDescription": "J-Sports Cards began as a personal idea addressing a real-world problem and a gap in the current market. This app concept is designed to turn pictures on your phone into customizable trading card-style formats, which can then be downloaded or printed. Its unique strength lies in its adaptability: it can apply to any sport or activity. The app easily lays out and makes available sport-specific stats—goals and assists for hockey, home runs or strikeouts for baseball, and so on for various sports. Having one app that manages all sports is a novel concept not currently available. In today's competitive world, tracking data is something even children enjoy, sometimes without realizing it. An easy and simplified user interface allows anyone, from amateur to professional, to customize what they see on their card. If a beginner didn't get any points, that wouldn't be posted. However, if an advanced player broke a new personal record, that would definitely be on the back of the card. An intuitive system that applies to all different player types is key to this app’s success. Real user research was conducted, including journey mapping and personas. Based on this information, wireframes were created and developed into a functional prototype. The exciting next step will be developing an MVP version of the app. As my education continues at the time of writing this, I am fortunate to have opportunities to bring my imagination to life.",
+    "longDescription": "J-Sports Cards began as a personal idea addressing a real-world problem and a gap in the current market. This app concept is designed to turn pictures on your phone into customizable trading card-style formats, which can then be downloaded or printed. Its unique strength lies in its adaptability: it can apply to any sport or activity. The app easily lays out and makes available sport-specific stats—goals and assists for hockey, home runs or strikeouts for baseball, and so on for various sports. Having one app that manages all sports is a novel concept not currently available. In today's competitive world, tracking data is something even children enjoy, sometimes without realizing it. An easy and simplified user interface allows anyone, from amateur to professional, to customize what they see on their card. If a beginner didn't get any points, that wouldn't be posted. However, if an advanced player broke a new personal record, that would definitely be on the back of the card. An intuitive system that applies to all different player types is key to this app's success. Real user research was conducted, including journey mapping and personas. Based on this information, wireframes were created and developed into a functional prototype. The exciting next step will be developing an MVP version of the app. As my education continues at the time of writing this, I am fortunate to have opportunities to bring my imagination to life.",
     "images": [
       {
-        "src": "/images/j-sports-cards-main.jpg",
-        "alt": "Main screen of J-Sports Cards app prototype showing a customizable sports card.",
-        "caption": "A glimpse of the J-Sports Cards app prototype with a personalized trading card."
+        "src": "/images/projects/j-sports/7.jpg",
+        "alt": "App overview showing multiple trading card designs",
+        "caption": "Main interface showcasing various sports card customization options."
+      },
+      {
+        "src": "/images/projects/j-sports/8.jpg",
+        "alt": "User interface for sport selection and stats input",
+        "caption": "Sport selection interface with intuitive stats input system."
+      },
+      {
+        "src": "/images/projects/j-sports/1.jpg",
+        "alt": "Individual trading card design showcase",
+        "caption": "Example of a personalized digital trading card with player statistics."
+      },
+      {
+        "src": "/images/projects/j-sports/3.jpg",
+        "alt": "Card customization interface",
+        "caption": "Detailed view of the card customization and editing interface."
+      },
+      {
+        "src": "/images/projects/j-sports/9.mov",
+        "alt": "Interactive prototype demonstration",
+        "caption": "Live demonstration of the J-Sports Cards app prototype in action.",
+        "type": "video"
+      },
+      {
+        "src": "/images/projects/j-sports/10.jpg",
+        "alt": "Multiple card layouts and templates",
+        "caption": "Various card layout options and template designs available in the app."
+      },
+      {
+        "src": "/images/projects/j-sports/5.jpg",
+        "alt": "Stats tracking and data visualization",
+        "caption": "Advanced stats tracking and data visualization features."
+      },
+      {
+        "src": "/images/projects/j-sports/2.jpg",
+        "alt": "Final card export and sharing options",
+        "caption": "Export and sharing interface for completed trading cards."
+      },
+      {
+        "src": "/images/projects/j-sports/7.jpg",
+        "alt": "Final card export and sharing options",
+        "caption": "Export and sharing interface for completed trading cards."
       }
     ],
     "technologiesUsed": [
@@ -110,7 +167,7 @@
     "liveUrl": null,
     "githubUrl": null,
     "caseStudyUrl": null,
-    "rolePlayed": "UI/UX Designer, Researcher, Product Conceptualizer, Developer", 
+    "rolePlayed": "UI/UX Designer, Researcher, Product Conceptualizer, Developer",
     "challenges": [
       {
         "description": "Being a full-time student in a high-demand course limit's extra time for passion projects.",
@@ -123,5 +180,4 @@
     ],
     "outcome": "Successfully developed wireframes and a functional prototype for the J-Sports Cards app, validated by real-world user research. This project confirmed theory through practical application, laying the groundwork for a future MVP development."
   }
-
 ]

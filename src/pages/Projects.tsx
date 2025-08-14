@@ -11,7 +11,7 @@ interface Project {
 }
 
 const tokens = {
-  maxW: "max-w-[1120px]",
+  maxW: "max-w-4xl", // Changed from max-w-[1120px] to match About page
   text: {
     kicker: "text-xs tracking-[0.18em] uppercase text-zinc-500",
     h1: "text-[clamp(40px,6vw,84px)] leading-[0.95] font-semibold text-zinc-900",
@@ -54,12 +54,12 @@ const Projects: React.FC = () => {
   return (
     <main className="bg-white">
       {/* Hero */}
-      <section className="py-8 px-4 md:py-12 md:px-8">
-        <div className={`${tokens.maxW} mx-auto`}>
+      <section className="py-8 px-4 max-w-4xl mx-auto font-space-grotesk text-gray-900 leading-relaxed md:py-16 md:px-8">
+        <div>
           <img
-            src="/images/pages-aboot.svg"
+            src="/images/pages-projects.svg"
             alt="Decorative header"
-            className="w-full h-full object-cover -mb-3"
+            className="w-full h-full object-cover sm:-mb-14 md:-mb-14 lg:-mb-18"
           />
           <div className="relative w-full aspect-video rounded-xl overflow-hidden backdrop-blur-[.3em] bg-white/10">
             <div
@@ -70,25 +70,25 @@ const Projects: React.FC = () => {
               }}
             />
             <div className="absolute inset-0 grid place-items-center p-6 text-center">
-              <div className="mx-auto max-w-[900px] space-y-4">
+              <div className="mx-auto max-w-[800px] space-y-4"> {/* Reduced from 900px to 800px */}
                 <p className={tokens.text.kicker}>Who I Am</p>
                 <h2 className={`${tokens.text.h2} bg-gradient-to-r from-cyan-400 to-green-500 bg-clip-text text-transparent mt-2`}>
                   From the field to the office — no stone unturned
                 </h2>
-                <p className={`${tokens.text.body} max-w-[72ch] mx-auto`}>
-                  <span className="font-semibold text-zinc-900">I take a lot of pride</span> in my work — whether it’s a one-day task or a months-long project.
+                <p className={`${tokens.text.body} max-w-[68ch] mx-auto`}> {/* Reduced from 72ch to 68ch */}
+                  <span className="font-semibold text-zinc-900">I take a lot of pride</span> in my work — whether it's a one-day task or a months-long project.
                 </p>
-                <p className={`${tokens.text.body} max-w-[72ch] mx-auto`}>
+                <p className={`${tokens.text.body} max-w-[68ch] mx-auto`}>
                   When I look at something physical or think about something digital, I actively think about all the small little gears — turning and moving — and how they affect each other to make that <span className="italic">clock tick</span>.
                 </p>
-                <p className={`${tokens.text.body} max-w-[72ch] mx-auto`}>
+                <p className={`${tokens.text.body} max-w-[68ch] mx-auto`}>
                   My great-grandfather built the <span className="font-semibold">grand clocks</span> that marked the heart of German town squares.
                 </p>
-                <p className={`${tokens.text.body} max-w-[72ch] mx-auto`}>
-                  My grandfather worked at Panasonic, and in the late ’80s began a project with a dentist to deliver voice-based dental training from Canada to remote African communities — <span className="text-zinc-900 font-medium">a rare and forward-thinking idea for the time</span>.
+                <p className={`${tokens.text.body} max-w-[68ch] mx-auto`}>
+                  My grandfather worked at Panasonic, and in the late '80s began a project with a dentist to deliver voice-based dental training from Canada to remote African communities — <span className="text-zinc-900 font-medium">a rare and forward-thinking idea for the time</span>.
                 </p>
-                <p className={`${tokens.text.body} max-w-[72ch] mx-auto`}>
-                  I’ve carried that same sense of <span className="font-semibold">precision</span> and <span className="font-semibold">forward-thinking</span> into the way I design and develop today.
+                <p className={`${tokens.text.body} max-w-[68ch] mx-auto`}>
+                  I've carried that same sense of <span className="font-semibold">precision</span> and <span className="font-semibold">forward-thinking</span> into the way I design and develop today.
                 </p>
               </div>
             </div>
@@ -97,8 +97,8 @@ const Projects: React.FC = () => {
       </section>
 
       {/* Projects List */}
-      <section id="projects-list" className="px-5 md:px-8 py-10 md:py-16">
-        <div className={`${tokens.maxW} mx-auto`}>
+      <section id="projects-list" className="px-4 md:px-8 py-10 md:py-16">
+        <div className="max-w-4xl mx-auto">
           <ul className="m-0 grid grid-cols-1 gap-6">
             {projects.map((p) => {
               const isActive = activePlayingId === p.id;
@@ -114,7 +114,7 @@ const Projects: React.FC = () => {
                   onMouseLeave={() => setActivePlayingId(DEFAULT_PLAYING_ID)}
                 >
                   <Link to={`/projects/${p.id}`} className="block">
-                    <div className="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-0">
+                    <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-0"> {/* Reduced image width from 240px to 200px */}
                       <div className="md:border-r md:border-zinc-100">
                         {displaySrc ? (
                           <img
@@ -134,7 +134,7 @@ const Projects: React.FC = () => {
                           </div>
                         )}
                       </div>
-                      <div className="p-5 md:p-6 lg:p-8">
+                      <div className="p-4 md:p-5 lg:p-6"> {/* Reduced padding slightly */}
                         <p className={tokens.text.kicker}>Case Study</p>
                         <h3 className={`${tokens.text.h2} mt-2 group-hover:underline underline-offset-4`}>{p.name}</h3>
                         {p.shortDescription && <p className={`${tokens.text.body} mt-3 line-clamp-3`}>{p.shortDescription}</p>}
