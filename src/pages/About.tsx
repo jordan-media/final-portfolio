@@ -150,17 +150,17 @@ const About = () => {
           <span className="italic font-semibold text-2xl font-stretch-condensed">
             User Experience,
             <br />
-            Motion Graphics,
+            Development,
             <br />
           </span>
           &{" "}
           <span className="italic font-semibold text-2xl font-stretch-condensed">
-            Development <br />
+            Storytelling <br />
           </span>
           with sprinkles of
           <span className="italic font-semibold text-2xl font-stretch-condensed">
             {" "}
-            Storytelling, <br />
+            Motion Graphics, <br />
             Animation
           </span>{" "}
           & <br />
@@ -190,44 +190,77 @@ const About = () => {
 
       <References />
 
-      {/* Technical Skills */}
-      <div className="mb-12 md:mb-16">
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 pb-2 border-b border-gray-300">
-          Technical Skills
-        </h2>
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 list-none p-0">
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            React
-          </li>
-          <li className="bg-gradient-to-r from-white from-25% to-cyan-500 to-75% py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Vite
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            After Effects
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Premiere
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Audition
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Illustrator
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Photoshop
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Figma
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            Blender
-          </li>
-          <li className="bg-gray-100 py-3 px-4 rounded-md text-center font-medium text-sm md:text-base shadow-sm">
-            AutoCAD
-          </li>
-        </ul>
-      </div>
+{/* Technical Skills */}
+<div className="mb-12 md:mb-16 relative">
+  {/* Title behind the glass */}
+  <h2 className="absolute top-1/2 transform -translate-y-1/2 left-1/2 transform -translate-x-1/2 z-0 text-8xl sm:text-9xl lg:text-8xl font-bold bg-gradient-to-r from-cyan-500 to-green-800 bg-clip-text text-transparent text-center opacity-80 tracking-widest">
+    Technical Skills
+  </h2>
+  
+  {/* Skills Grid Container with Glassmorphism */}
+  <div 
+    className="relative rounded-2xl overflow-hidden backdrop-blur-sm bg-white/10 p-6 md:p-8 z-10"
+    style={{
+      boxShadow: "inset -3px -3px 9.1px 1px rgba(255,255,255,0.22), inset 0px 2px 5.5px 0px rgba(255,255,255,0.08), inset 0px -2px 13.7px rgba(6,78,59,0.3)"
+    }}
+  >
+    {/* Background gradient overlay */}
+    <div 
+      className="absolute inset-0 opacity-20 pointer-events-none"
+      style={{
+        background: "linear-gradient(135deg, rgba(6,182,212,0.1) 0%, rgba(34,197,94,0.1) 50%, rgba(6,78,59,0.1) 100%)"
+      }}
+    />
+    
+    {/* Skills Grid */}
+    <ul className="relative z-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4 list-none p-0">
+      {[
+        'React', 'Vite', 'After Effects', 'Premiere', 'Audition', 
+        'Illustrator', 'Photoshop', 'Figma', 'Blender', 'AutoCAD'
+      ].map((skill, index) => (
+        <li 
+          key={skill}
+          className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-lg"
+          style={{
+            background: `linear-gradient(135deg, 
+              rgba(255,255,255,0.2) 0%, 
+              rgba(6,182,212,0.1) ${30 + (index * 7) % 40}%, 
+              rgba(34,197,94,0.1) ${60 + (index * 11) % 30}%, 
+              rgba(255,255,255,0.1) 100%)`,
+            backdropFilter: "blur(8px)",
+            boxShadow: "inset -1px -1px 3px rgba(255,255,255,0.3), inset 1px 1px 3px rgba(6,78,59,0.2)"
+          }}
+        >
+          {/* Hover gradient overlay */}
+          <div 
+            className="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+            style={{
+              background: "linear-gradient(135deg, rgba(6,182,212,0.3) 0%, rgba(34,197,94,0.3) 100%)"
+            }}
+          />
+          
+          {/* Skill text */}
+          <span className="relative z-10 block py-3 px-4 text-center font-medium text-sm md:text-base text-gray-800 group-hover:text-gray-900 transition-colors duration-300">
+            {skill}
+          </span>
+          
+          {/* Subtle border highlight */}
+          <div 
+            className="absolute inset-0 rounded-xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{
+              boxShadow: "inset 0 0 0 1px rgba(6,182,212,0.4)"
+            }}
+          />
+        </li>
+      ))}
+    </ul>
+
+    
+    {/* Floating accent elements */}
+    <div className="absolute top-4 right-4 w-16 h-16 rounded-full opacity-20 pointer-events-none bg-gradient-to-br from-cyan-400 to-green-500 blur-xl" />
+    <div className="absolute bottom-6 left-6 w-12 h-12 rounded-full opacity-15 pointer-events-none bg-gradient-to-tr from-green-400 to-cyan-500 blur-lg" />
+  </div>
+</div>
 
       {/* Closing Statement */}
       <div>

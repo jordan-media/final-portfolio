@@ -1,22 +1,12 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
-/**
- * ProjectDependenciesPage
- * A refined, whitespace-forward case-study layout modeled after boutique studio sites.
- * - Sticky meta sidebar (desktop)
- * - Full-bleed hero
- * - Generous whitespace, large type, restrained color
- * - Media placeholders that you can replace with images/videos later (sizes matched via aspect ratios)
- * - Works with your existing /projects.json structure (Project, ProjectImage, ProjectChallenge)
- * - Graceful handling for projects with more text than media
- */
-
 // Types match your existing schema
 interface ProjectImage {
   src: string;
   alt: string;
   caption?: string | null;
+  type?: 'image' | 'video'; // Added type field
 }
 interface ProjectChallenge {
   description: string;
@@ -39,9 +29,9 @@ interface Project {
   outcome?: string | null;
 }
 
-// --------- Minimal tokens (adjust to your brand later) ---------
+// --------- Minimal tokens ---------
 const tokens = {
-  maxW: "max-w-[1120px]", // a touch wider than your current 4xl container
+  maxW: "max-w-[1120px]",
   text: {
     body: "text-[17px] leading-[1.75] text-zinc-700",
     kicker: "text-xs tracking-[0.18em] uppercase text-zinc-500",
@@ -54,8 +44,49 @@ const tokens = {
   pad: "p-5 md:p-6 lg:p-8",
 };
 
+// --------- Media Component (handles both images and videos) ---------
+const MediaComponent: React.FC<{ 
+  item: ProjectImage; 
+  className?: string; 
+  aspectRatio?: string;
+}> = ({ item, className = "", aspectRatio }) => {
+  const isVideo = item.type === 'video' || item.src.endsWith('.mov') || item.src.endsWith('.mp4');
+  
+  if (isVideo) {
+    return (
+      <div className={`w-full max-w-[225px] mx-auto ${aspectRatio || 'aspect-[9/16]'}`}>
+        <video 
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls 
+          className={`w-full h-full rounded-2xl object-contain ${className}`}
+          poster={item.src.replace(/\.(mov|mp4)$/, '.jpg')} // Try to find a poster image
+        >
+          <source src={item.src} type="video/mp4" />
+          <source src={item.src} type="video/quicktime" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    );
+  }
+  
+  return (
+    <img 
+      src={item.src} 
+      alt={item.alt} 
+      className={`w-full rounded-2xl object-contain ${aspectRatio || ''} ${className}`} 
+    />
+  );
+};
+
 // --------- Media Placeholder ---------
-const MediaPlaceholder: React.FC<{ label?: string; aspect?: string; className?: string }>= ({ label = "Media", aspect = "aspect-[16/9]", className = "" }) => (
+const MediaPlaceholder: React.FC<{ label?: string; aspect?: string; className?: string }> = ({ 
+  label = "Media", 
+  aspect = "aspect-[16/9]", 
+  className = "" 
+}) => (
   <div className={`${aspect} w-full overflow-hidden rounded-2xl bg-zinc-100 ${className}`}>
     <div className="h-full w-full grid place-items-center">
       <div className="text-center">
@@ -74,7 +105,11 @@ const Chip: React.FC<{ children: React.ReactNode }> = ({ children }) => (
 );
 
 // --------- External Link Button ---------
-const LinkBtn: React.FC<{ href: string; variant?: "primary" | "ghost"; children: React.ReactNode }>= ({ href, variant = "primary", children }) => (
+const LinkBtn: React.FC<{ href: string; variant?: "primary" | "ghost"; children: React.ReactNode }> = ({ 
+  href, 
+  variant = "primary", 
+  children 
+}) => (
   <a
     href={href}
     target="_blank"
@@ -90,7 +125,11 @@ const LinkBtn: React.FC<{ href: string; variant?: "primary" | "ghost"; children:
 );
 
 // --------- Section Wrapper ---------
-const Section: React.FC<{ children: React.ReactNode; id?: string; className?: string }> = ({ children, id, className = "" }) => (
+const Section: React.FC<{ children: React.ReactNode; id?: string; className?: string }> = ({ 
+  children, 
+  id, 
+  className = "" 
+}) => (
   <section id={id} className={`px-5 md:px-8 ${className}`}>
     <div className={`${tokens.maxW} mx-auto`}>{children}</div>
   </section>
@@ -128,6 +167,9 @@ const ProjectDependenciesPage: React.FC = () => {
   useEffect(() => setReadMore(false), [projectId]);
 
   const allImages = useMemo(() => project?.images ?? [], [project]);
+  const videoItems = useMemo(() => allImages.filter(item => 
+    item.type === 'video' || item.src.endsWith('.mov') || item.src.endsWith('.mp4')
+  ), [allImages]);
 
   if (loading) {
     return (
@@ -151,20 +193,16 @@ const ProjectDependenciesPage: React.FC = () => {
     <main className="bg-white">
       {/* HERO (full-bleed) */}
       <div className="relative">
-        {/* Hero media: show first image if present, else a tall placeholder */}
         {allImages[0]?.src ? (
           <div className="w-full">
-            <img
-              src={allImages[0].src}
-              alt={allImages[0].alt || project.name}
-              className="h-[44vh] md:h-[60vh] w-full object-cover"
+            <MediaComponent 
+              item={allImages[0]} 
+              aspectRatio="h-[44vh] md:h-[60vh]"
             />
           </div>
         ) : (
           <MediaPlaceholder label="Hero Media" aspect="aspect-[3/1]" />
         )}
-
-        {/* Title overlay (optional). Keeping separate to preserve whitespace-forward look */}
       </div>
 
       {/* Title & Meta */}
@@ -178,7 +216,6 @@ const ProjectDependenciesPage: React.FC = () => {
               <p className={`${tokens.text.body} mt-6 max-w-[68ch]`}>{project.shortDescription}</p>
             )}
 
-            {/* Read more section for long text-heavy projects */}
             {project.longDescription && project.longDescription !== project.shortDescription && (
               <div className="mt-6">
                 <div className={`${tokens.text.body} max-w-[72ch] whitespace-pre-line ${readMore ? "" : "line-clamp-6"}`}>
@@ -248,34 +285,69 @@ const ProjectDependenciesPage: React.FC = () => {
           {/* First wide media */}
           <div>
             {allImages[1]?.src ? (
-              <img src={allImages[1].src} alt={allImages[1].alt || "Project media"} className="w-full rounded-2xl object-cover" />
+              <div>
+                <MediaComponent item={allImages[1]} />
+                <div className="mt-4 text-center">
+                  <h3 className="text-lg font-semibold text-zinc-900 mb-2">Core Interface Design</h3>
+                  <p className="text-sm text-zinc-600 max-w-[60ch] mx-auto">
+                    {allImages[1]?.caption || "An intuitive system that applies to all different player types - from amateur to professional - allowing anyone to customize what they see on their card."}
+                  </p>
+                </div>
+              </div>
             ) : (
               <MediaPlaceholder label="Wide Image" aspect="aspect-[21/9]" />
-            )}
-            {allImages[1]?.caption && (
-              <p className="mt-2 text-sm text-zinc-500">{allImages[1].caption}</p>
             )}
           </div>
 
           {/* Two-column media row */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {allImages[2]?.src ? (
-              <img src={allImages[2].src} alt={allImages[2].alt || "Project media"} className="w-full rounded-2xl object-cover" />
-            ) : (
-              <MediaPlaceholder label="Left (4:3)" aspect="aspect-[4/3]" />
-            )}
-            {allImages[3]?.src ? (
-              <img src={allImages[3].src} alt={allImages[3].alt || "Project media"} className="w-full rounded-2xl object-cover" />
-            ) : (
-              <MediaPlaceholder label="Right (9:16)" aspect="aspect-[9/16]" />
-            )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              {allImages[2]?.src ? (
+                <MediaComponent item={allImages[2]} aspectRatio="aspect-[4/3]" />
+              ) : (
+                <MediaPlaceholder label="Left (4:3)" aspect="aspect-[4/3]" />
+              )}
+              <div className="mt-3">
+                <h4 className="text-base font-semibold text-zinc-900">User Research & Personas</h4>
+                <p className="text-sm text-zinc-600 mt-1">
+                  {allImages[2]?.caption || "Real user research was conducted, including journey mapping and personas, to understand what parents of kids playing sports actually want."}
+                </p>
+              </div>
+            </div>
+            
+            <div>
+              {allImages[3]?.src ? (
+                <MediaComponent item={allImages[3]} aspectRatio="aspect-[9/16]" />
+              ) : (
+                <MediaPlaceholder label="Right (9:16)" aspect="aspect-[9/16]" />
+              )}
+              <div className="mt-3">
+                <h4 className="text-base font-semibold text-zinc-900">Mobile-First Design</h4>
+                <p className="text-sm text-zinc-600 mt-1">
+                  {allImages[3]?.caption || "The app easily lays out sport-specific stats — goals and assists for hockey, home runs for baseball, and so on for various sports."}
+                </p>
+              </div>
+            </div>
           </div>
 
-          {/* Video slot */}
-          <div>
-            {/* Replace with <video controls poster=...> */}
-            <MediaPlaceholder label="Video (16:9)" aspect="aspect-video" />
-          </div>
+          {/* Video section - show first video if available */}
+          {videoItems[0] && (
+            <div className="flex justify-center">
+              <div className="w-auto text-center">
+                <MediaComponent item={videoItems[0]} aspectRatio="aspect-[9/16]" />
+                <div className="mt-4">
+                  <h3 className="text-lg font-semibold text-zinc-900 mb-2">Interactive Prototype</h3>
+                  <p className="text-sm text-zinc-600 max-w-[40ch] mx-auto">
+                    {videoItems[0].caption || "A functional prototype demonstrating the core user flow - from photo upload to customized trading card creation."}
+                  </p>
+                  <div className="mt-3 inline-flex items-center gap-2 text-xs text-zinc-500 bg-zinc-50 px-3 py-1 rounded-full">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    Live Demo
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </Section>
 
@@ -300,13 +372,17 @@ const ProjectDependenciesPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Pull-quote / insight card */}
             <aside className="lg:sticky lg:top-24 self-start">
               <div className={`${tokens.card} ${tokens.pad}`}>
-                <p className={tokens.text.kicker}>Insight</p>
+                <p className={tokens.text.kicker}>Key Insight</p>
                 <p className="mt-3 text-[17px] leading-7 text-zinc-800">
-                  Each obstacle informed the next iteration. The process favored clarity, speed, and a calm, collaborative tone with stakeholders.
+                  "Having one app that manages all sports is a novel concept not currently available. In today's competitive world, tracking data is something even children enjoy."
                 </p>
+                <div className="mt-4 pt-4 border-t border-zinc-100">
+                  <p className="text-sm text-zinc-600">
+                    <span className="font-medium text-zinc-900">Market Gap:</span> No existing solution provides multi-sport data tracking in a customizable, card-format interface.
+                  </p>
+                </div>
               </div>
             </aside>
           </div>
@@ -326,7 +402,6 @@ const ProjectDependenciesPage: React.FC = () => {
                 </p>
               </div>
 
-              {/* CTA Card */}
               <aside className="lg:sticky lg:top-24 self-start">
                 <div className={`${tokens.card} ${tokens.pad} space-y-4`}>
                   <p className={tokens.text.kicker}>Explore</p>
@@ -344,20 +419,58 @@ const ProjectDependenciesPage: React.FC = () => {
 
       <Divider />
 
-      {/* GALLERY GRID (more placeholders so you can match the studio’s density) */}
+      {/* GALLERY GRID */}
       <Section className="pb-24">
-        <h2 className={`${tokens.text.h2} mb-8`}>Gallery</h2>
+        <div className="text-center mb-12">
+          <h2 className={`${tokens.text.h2} mb-4`}>Project Gallery</h2>
+          <p className="text-zinc-600 max-w-[60ch] mx-auto">
+            A comprehensive look at the design process, from initial wireframes to final prototype screens.
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* Render existing images first */}
-          {allImages.slice(0, 6).map((img, i) => (
-            <figure key={i} className="space-y-2">
-              <img src={img.src} alt={img.alt || `Gallery ${i+1}`} className="w-full rounded-2xl object-cover" />
-              {img.caption && <figcaption className="text-xs text-zinc-500">{img.caption}</figcaption>}
-            </figure>
-          ))}
+          {allImages.slice(0, 9).map((item, i) => {
+            // Enhanced captions for gallery items
+            const enhancedCaptions = [
+              "Multi-sport interface showing card customization options across different sports and skill levels.",
+              "User onboarding flow demonstrating the intuitive photo-to-card transformation process.",
+              "Stats input interface with sport-specific data fields and validation.",
+              "Card template selection showing various design options and layouts available.",
+              "Interactive prototype demo showcasing the complete user journey.",
+              "Export and sharing functionality with multiple format options.",
+              "Advanced customization panel with typography and color controls.",
+              "Final card output examples across multiple sports and player types."
+            ];
+            
+            return (
+              <figure key={i} className="space-y-3 group">
+                {item.type === 'video' || item.src.endsWith('.mov') || item.src.endsWith('.mp4') ? (
+                  <video 
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    controls 
+                    className="w-full aspect-[4/3] rounded-2xl object-contain bg-zinc-50 group-hover:shadow-lg transition-shadow duration-300"
+                  >
+                    <source src={item.src} type="video/mp4" />
+                    <source src={item.src} type="video/quicktime" />
+                  </video>
+                ) : (
+                  <img 
+                    src={item.src} 
+                    alt={item.alt} 
+                    className="w-full aspect-[4/3] rounded-2xl object-contain bg-zinc-50 group-hover:shadow-lg transition-shadow duration-300" 
+                  />
+                )}
+                <figcaption className="text-xs text-zinc-500 leading-relaxed">
+                  {item.caption || enhancedCaptions[i] || `Design iteration ${i + 1} showing key interface elements and user interaction patterns.`}
+                </figcaption>
+              </figure>
+            );
+          })}
 
-          {/* Then fill remaining with placeholders up to 9 */}
-          {Array.from({ length: Math.max(0, 9 - Math.min(allImages.length, 6)) }).map((_, i) => (
+          {/* Fill remaining with placeholders up to 9 */}
+          {Array.from({ length: Math.max(0, 9 - Math.min(allImages.length, 9)) }).map((_, i) => (
             <MediaPlaceholder key={`ph-${i}`} label="Gallery" aspect="aspect-[4/3]" />
           ))}
         </div>
